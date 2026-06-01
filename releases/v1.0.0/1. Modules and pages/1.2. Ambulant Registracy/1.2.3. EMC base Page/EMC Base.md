@@ -1,4 +1,4 @@
-# 1.2.4. EMR Database Page
+# 1.2.3. EMC Database Page
 
 ## Спецификация страницы интерфейса
 
@@ -60,10 +60,15 @@
 
 ## Структура: Wireframes
 
-### Header
+### Page Header
 
--   Кнопка Зарегистрировать пациента
--   Кнопка Запись пациента
+**Page Header** — заголовочный блок с кнопками управления (см. [Page Header.md](../1.2.0. Module layout components/1.2.0.1. Page Header/Page Header.md)):
+- Кнопка **Зарегистрировать пациента** — открывает модаль регистрации нового пациента
+- Кнопка **Запись пациента** — открывает модаль создания записи пациента к врачу
+
+### Electronic Queue
+
+**Electronic Queue** — блок электронной очереди по правому краю (см. [Electronic Queue.md](../1.2.0. Module layout components/1.2.0.2. Electronic Queue/Electronic queue.md))
 
 ### Контент
 

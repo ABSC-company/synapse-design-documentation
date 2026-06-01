@@ -1,4 +1,4 @@
-# 1.2.5. Clinic Map Page
+# 1.2.4. Clinic Map Page
 
 ## Спецификация страницы интерфейса
 
@@ -32,12 +32,15 @@
 Общий layout страницы:
 
 1. Слева:
-   - Sidebar в свернутом состоянии.
+   - Sidebar
 
 2. Сверху:
-   - Header модуля регистратуры.
+   - **Page Header** — заголовочный блок с кнопками управления (см. [Page Header.md](../1.2.0. Module layout components/1.2.0.1. Page Header/Page Header.md))
 
-3. Контентная область:
+3. Справа:
+   - **Electronic Queue** — блок электронной очереди по правому краю (см. [Electronic Queue.md](../1.2.0. Module layout components/1.2.0.2. Electronic Queue/Electronic queue.md))
+
+4. Контентная область:
 
 Первый контент:
 
@@ -184,10 +187,15 @@
 
 Структурные блоки страницы:
 
-## Header модуля
+## Page Header
 
-- Кнопка Зарегистрировать пациента
-- Кнопка Запись пациента
+**Page Header** — заголовочный блок с кнопками управления (см. [Page Header.md](../1.2.0. Module layout components/1.2.0.1. Page Header/Page Header.md)):
+- Кнопка **Зарегистрировать пациента** — открывает модаль регистрации нового пациента
+- Кнопка **Запись пациента** — открывает модаль создания записи пациента к врачу
+
+## Electronic Queue
+
+**Electronic Queue** — блок электронной очереди по правому краю (см. [Electronic Queue.md](../1.2.0. Module layout components/1.2.0.2. Electronic Queue/Electronic queue.md))
 
 ---
 
