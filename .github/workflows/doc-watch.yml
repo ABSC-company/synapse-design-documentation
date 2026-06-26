@@ -1,0 +1,63 @@
+name: Doc Change Watcher
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'releases/**'
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    if: startsWith(github.event.head_commit.message, 'upd:')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute docs diff
+        run: |
+          EMPTY_TREE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+          BEFORE='${{ github.event.before }}'
+          AFTER='${{ github.event.after }}'
+          if ! git cat-file -e "${BEFORE}^{commit}" 2>/dev/null; then
+            BEFORE="$EMPTY_TREE"
+          fi
+          git diff --unified=3 "$BEFORE" "$AFTER" -- 'releases/**' > diff.txt || true
+          echo "----- diff preview -----"
+          head -n 40 diff.txt || true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install openai requests
+
+      - name: Analyze diff with OpenAI
+        id: analyze
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4o
+        run: python .github/scripts/analyze_diff.py
+
+      - name: Create Jira issue
+        if: steps.analyze.outputs.requires_attention == 'true'
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          # ключ проекта — из переменной репозитория, с откатом на секрет, если задан там
+          JIRA_PROJECT_KEY: ${{ vars.JIRA_PROJECT_KEY || secrets.JIRA_PROJECT_KEY }}
+          # исполнитель задачи: accountId или email (необязательно). Пусто = без исполнителя
+          JIRA_ASSIGNEE: ${{ vars.JIRA_ASSIGNEE || secrets.JIRA_ASSIGNEE }}
+          COMMIT_URL: ${{ github.event.head_commit.url }}
+          COMPARE_URL: ${{ github.event.compare }}
+          COMMIT_AUTHOR: ${{ github.event.head_commit.author.name }}
+          REPO: ${{ github.repository }}
+        run: python .github/scripts/create_jira.py
