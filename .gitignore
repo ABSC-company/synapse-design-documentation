@@ -3,3 +3,4 @@ temp.md
 CLAUDE.md
 graphify-out
 .graphify.env
+*.DS_Store
