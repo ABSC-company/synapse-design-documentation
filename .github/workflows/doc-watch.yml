@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'releases/**'
+      - 'apps/**'
 
 permissions:
   contents: read
@@ -27,7 +27,7 @@ jobs:
           if ! git cat-file -e "${BEFORE}^{commit}" 2>/dev/null; then
             BEFORE="$EMPTY_TREE"
           fi
-          git diff --unified=3 "$BEFORE" "$AFTER" -- 'releases/**' > diff.txt || true
+          git diff --unified=3 "$BEFORE" "$AFTER" -- 'apps/**' > diff.txt || true
           echo "----- diff preview -----"
           head -n 40 diff.txt || true
 
