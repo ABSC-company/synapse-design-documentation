@@ -2,7 +2,7 @@
 #   synapse-architecture-documentation, synapse-frontend-documentation  -> branches: [main],  paths: ['apps/**']
 #   synapse-clinic-server                                                -> branches: [dev],   paths: ['src/**']
 #   synapse-clinic-client                                                -> branches: [dev],   paths: ['src/**']
-# Требуется secret DIAGRAMS_DISPATCH_TOKEN (fine-grained PAT с правом Contents: Read and write на репозиторий rakhmight/synapse-analytics-diagrams).
+# Требуется secret DIAGRAMS_DISPATCH_TOKEN (fine-grained PAT с правом Contents: Read and write на репозиторий ABSC-company/synapse-analytics-diagrams).
 name: Notify diagrams catalog
 
 on:
@@ -19,7 +19,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.DIAGRAMS_DISPATCH_TOKEN }}
         run: |
-          gh api repos/rakhmight/synapse-analytics-diagrams/dispatches \
+          gh api repos/ABSC-company/synapse-analytics-diagrams/dispatches \
             -f event_type=sources-updated \
             -f 'client_payload[repo]=${{ github.repository }}' \
             -f 'client_payload[sha]=${{ github.sha }}'
