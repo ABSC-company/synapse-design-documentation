@@ -1,0 +1,25 @@
+# Положить в КАЖДЫЙ репозиторий-источник: .github/workflows/notify-diagrams.yml
+#   synapse-architecture-documentation, synapse-frontend-documentation  -> branches: [main],  paths: ['apps/**']
+#   synapse-clinic-server                                                -> branches: [dev],   paths: ['src/**']
+#   synapse-clinic-client                                                -> branches: [dev],   paths: ['src/**']
+# Требуется secret DIAGRAMS_DISPATCH_TOKEN (fine-grained PAT с правом Contents: Read and write на репозиторий synapse-diagrams).
+name: Notify diagrams catalog
+
+on:
+  push:
+    branches: [main]            # для server/client: [dev]
+    paths:
+      - 'apps/**'               # для server/client: 'src/**'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tell synapse-diagrams that sources changed
+        env:
+          GH_TOKEN: ${{ secrets.DIAGRAMS_DISPATCH_TOKEN }}
+        run: |
+          gh api repos/ABSC-company/synapse-diagrams/dispatches \
+            -f event_type=sources-updated \
+            -f 'client_payload[repo]=${{ github.repository }}' \
+            -f 'client_payload[sha]=${{ github.sha }}'
