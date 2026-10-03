@@ -13,6 +13,8 @@ on:
 
 jobs:
   notify:
+    # пересчёт запускается только если сообщение последнего коммита пуша начинается с «upd:»
+    if: startsWith(github.event.head_commit.message, 'upd:')
     runs-on: ubuntu-latest
     steps:
       - name: Tell synapse-analytics-diagrams that sources changed
