@@ -135,28 +135,6 @@
 
 ---
 
-## Зависимости и ограничения
-
-### API
-
-1. `GET /api/v1/users` (сервисный уровень, контроллер уточняется — `AuthModule.md` §6.1) — список пользователей; ФИО/должность подтягиваются отдельным вызовом к HR Module по `user_id`.
-2. `POST /api/v1/user-roles/assign` / `POST /api/v1/user-roles/revoke`.
-3. `POST /api/v1/user-permissions/assign` / `POST /api/v1/user-permissions/revoke`.
-4. `POST /api/v1/users/{id}/reset-password` — сброс пароля (`AuthModule.md` §6.1a, подтверждённый контракт, см. Flow 4); новый пароль сотруднику доставляет Notifications Module, не ответ этого эндпоинта.
-5. Блокировка/разблокировка — контракт не зафиксирован, административная операция на сервисном уровне Auth Module (Flow 5, открытый вопрос); флаг «Выйти из профиля полностью» передаётся тем же вызовом и на бэкенде запускает принудительное завершение сессий и, через DI, `ElectronicQueueApplicationService.vacateEmployeeWindows` (`ElectronicQueueModule.md` §6.9, §7.1) — сама страница не вызывает Electronic Queue Module напрямую.
-
-### Роли и права
-
-| Действие | Право |
-|---|---|
-| Просмотр списка | `AUTH_USER_READ` (2001) |
-| Сброс пароля, блокировка | `AUTH_USER_UPDATE` (2003) |
-| Назначение/снятие ролей | `AUTH_USER_ROLE_ASSIGN` (2201) / `AUTH_USER_ROLE_REVOKE` (2202) |
-| Назначение/снятие точечных прав | `AUTH_USER_PERMISSION_ASSIGN` (2301) / `AUTH_USER_PERMISSION_REVOKE` (2302) |
-| Полный доступ | `AUTH_MANAGE` (2900) |
-
----
-
 ## Acceptance criteria
 
 1. Страница не содержит ни одного элемента создания/редактирования/удаления кадровых данных — только переход в HR для этого.

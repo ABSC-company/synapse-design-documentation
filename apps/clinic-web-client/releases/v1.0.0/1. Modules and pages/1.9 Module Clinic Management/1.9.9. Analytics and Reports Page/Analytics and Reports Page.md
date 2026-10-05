@@ -170,23 +170,6 @@
 4. Автообновление статуса в журнале выгрузок — визуально ненавязчивое (без мигания всей строки), обновляется только бейдж статуса и появляется кнопка «Скачать» по готовности.
 5. Числа в KPI-карточках анимируются счётчиком при первой загрузке (как в `1.6.1. HR Dashboard`).
 
-## Зависимости и ограничения
-
-### API
-
-1. `GET /reports/analytics/summary` — KPI-дашборд (`ReportsAndAnalyticsModule.md` §8, §12.2).
-2. `GET /reports/sales`, `GET /reports/patients`, `GET /reports/expenses` — данные вкладок (§12.3).
-3. `POST /reports/exports` — запуск выгрузки (§12.4).
-4. `GET /reports/exports`, `GET /reports/exports/:id`, `GET /reports/exports/:id/download` — журнал и скачивание (§12.4).
-
-### Роли и права
-
-1. `REPORTS_ANALYTICS_VIEW` — просмотр дашборда KPI (видимость страницы в целом).
-2. `REPORTS_SALES_VIEW` / `REPORTS_PATIENTS_VIEW` / `REPORTS_EXPENSES_VIEW` — видимость соответствующей вкладки.
-3. `REPORTS_EXPORT_CREATE` — видимость кнопки «Выгрузить» и доступность модали.
-4. `REPORTS_EXPORT_GET` — доступ к вкладке «Журнал выгрузок».
-5. `REPORTS_EXPORT_DOWNLOAD` — доступность кнопки «Скачать» в журнале.
-
 ## Acceptance criteria
 
 1. Дашборд отображает KPI за выбранный период с быстрыми пресетами и произвольным диапазоном дат.

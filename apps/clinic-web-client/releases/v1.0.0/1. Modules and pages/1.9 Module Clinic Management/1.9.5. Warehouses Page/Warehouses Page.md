@@ -104,24 +104,6 @@
 
 ---
 
-## Зависимости и ограничения
-
-### API
-
-1. `GET /warehouse/storages`, `POST/PATCH/DELETE /warehouse/storages` — справочник складов, включая размещение (`room_id`, `WarehouseModule.md` §4.15a, §12.6) — тот же контракт, что `1.7.6`, расширенный полем `room_id`.
-2. `GET /api/v1/structure/rooms/{branch_id}` — кабинеты для привязки (`StructureModule.md` §8.7, §14.9a).
-3. Сама привязка выполняется через Warehouse Module (п. 1), не напрямую через Structure Module.
-
-### Роли и права
-
-| Действие | Право |
-|---|---|
-| Просмотр реестра складов | `WAREHOUSE_STORAGE_GET` |
-| CRUD склада, включая привязку/снятие кабинета | `WAREHOUSE_STORAGE_MANAGE` |
-| Просмотр карты и кабинетов (только для отрисовки — привязку валидирует сам Warehouse Module) | `STRUCTURE_ROOM_GET` (3430) |
-
----
-
 ## Acceptance criteria
 
 1. Реестр складов показывает кабинет размещения или «не размещён».

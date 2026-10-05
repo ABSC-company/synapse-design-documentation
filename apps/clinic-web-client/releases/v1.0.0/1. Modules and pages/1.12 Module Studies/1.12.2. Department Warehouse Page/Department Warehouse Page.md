@@ -72,16 +72,6 @@
 
 Как в `1.13.2`; подсветка строк после автосписания — плавное затухание за 2–3 секунды.
 
-## Зависимости и ограничения
-
-### API
-
-Общие с `1.11.3` и `1.13.2`: `GET /warehouse/storages?type=consumer&department_id=`, `GET /warehouse/products`, `POST/GET /warehouse/storage-requests`, `GET /warehouse/marking-codes`, `POST /warehouse/marking-codes/:id/write-off`. Автосписание вызывается Booking Module (`dispenseReservation`) при завершении услуги, отдельного роута для этой страницы нет.
-
-### Роли и права
-
-Те же, что в `1.13.2`: `WAREHOUSE_STORAGE_GET`, `WAREHOUSE_STORAGE_REQUEST_CREATE`, `WAREHOUSE_STORAGE_REQUEST_GET`, `WAREHOUSE_MARKING_CODE_MANAGE`.
-
 ## Acceptance criteria
 
 1. Всё, что верно для `1.13.2. Department Warehouse Page`, верно и здесь.

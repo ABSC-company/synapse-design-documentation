@@ -110,25 +110,6 @@
 2. Создание запроса — модаль fade-in/out, стандартный паттерн системы.
 3. После отправки запроса — toast «Запрос отправлен», переключение на вкладку «Мои запросы» с новой строкой.
 
-## Зависимости и ограничения
-
-### API
-
-1. `GET /warehouse/storages?type=consumer&department_id=` — склад отделения с остатками.
-2. `GET /warehouse/products?search=` — каталог товаров для выбора в запросе.
-3. `POST /warehouse/storage-requests` — создание запроса.
-4. `GET /warehouse/storage-requests?storage_id=` — список запросов.
-
-### Роли и права
-
-1. `WAREHOUSE_STORAGE_GET` — просмотр остатков.
-2. `WAREHOUSE_STORAGE_REQUEST_CREATE` — создание запроса на пополнение.
-3. `WAREHOUSE_STORAGE_REQUEST_GET` — просмотр своих запросов.
-
-> Врачебная роль **не** получает `WAREHOUSE_MARKING_CODE_MANAGE` (списание) и `WAREHOUSE_STORAGE_REQUEST_PROCESS` (обработка чужих запросов) — эти права остаются за складом/сестринским персоналом (см. `1.13.2. Department Warehouse Page`).
->
-> ⚠️ Открытый вопрос к бэкенду: определение «склада моего отделения» для врача идёт через department его основной должности (`HRModule.md`, `position.department`) → `GET /warehouse/storages?department_id=`. Прямого роута «мой склад» нет — аналогичный открытый вопрос уже зафиксирован для кабинетов в `1.12.1. Studies Queue Page`.
-
 ## Acceptance criteria
 
 1. Страница показывает остатки склада отделения врача.

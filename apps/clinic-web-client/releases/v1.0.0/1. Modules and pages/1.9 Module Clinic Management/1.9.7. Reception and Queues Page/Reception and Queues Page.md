@@ -247,36 +247,6 @@
 
 ---
 
-## Зависимости и ограничения
-
-### API
-
-1. `GET /api/v1/electronic-queue/queue-points` / `POST` / `PATCH /{id}` / `DELETE /{id}` — CRUD точек очереди, включая размещение (`stand_id`/`room_id`, `ElectronicQueueModule.md` §8, §12.2). `POST /api/v1/structure/departments` с телом, включающим `queue_point`, — альтернативный путь создания точки очереди одновременно с созданием отдела (`StructureModule.md` §7.1a, §14.4; см. «Назначение страницы»), используется формой создания отдела на `1.6.2`, не этой страницей напрямую.
-2. `GET /api/v1/structure/departments/{branch_id}` — список отделов филиала для select «Отдел» (Flow 1), без фильтра по шаблону.
-3. `GET /api/v1/electronic-queue/queue-points/{id}/windows` / `POST /windows` / `PATCH /windows/{id}` / `DELETE /windows/{id}` — CRUD окон (`ElectronicQueueModule.md` §8, §12.3); окна не принимают `stand_id` — только `name`/`is_active`.
-4. `GET /api/v1/structure/stands/{branch_id}?type=reception` и `?type=unassigned` — стенды для карты размещения (Flow 4); `GET /api/v1/structure/rooms/{branch_id}` — кабинеты для карты размещения (Flow 4a). Сама привязка в обоих случаях выполняется через Electronic Queue Module (п. 1), не напрямую через Structure Module.
-5. `GET /api/v1/electronic-queue/kiosks` / `POST` / `GET /{id}` / `PATCH /{id}` / `DELETE /{id}` / `POST /{id}/regenerate-code` — реестр и CRUD киосков, включая генерацию/перевыпуск кода привязки (`ElectronicQueueModule.md` §8, §12.6, Flow 7, Flow 9). `POST` и `.../regenerate-code` — единственные вызовы, в чьём ответе присутствует открытый код (`pairing_code`) — страница не запрашивает и не может повторно получить код иначе, чем через один из этих двух вызовов.
-6. `GET /api/v1/electronic-queue/monitors` / `POST` / `GET /{id}` / `PATCH /{id}` / `DELETE /{id}` / `POST /{id}/regenerate-code` — реестр и CRUD мониторов, включая состав панелей (`queue_point_ids`/`window_ids`) и генерацию/перевыпуск кода (`ElectronicQueueModule.md` §8, §12.7, Flow 8, Flow 9). `GET /api/v1/electronic-queue/queue-points/{id}/windows` (уже используется в п. 3) переиспользуется здесь для построения дерева выбора панелей в Flow 8, п.1.
-7. Для карты размещения киоска/монитора (Flow 7/8, п.1) используется `GET /api/v1/structure/stands/{branch_id}` **без** фильтра `type` (в отличие от п.4 выше) — киоск и монитор могут быть размещены на стенде любого типа, включая уже занятый под кассу/регистратуру (`ElectronicQueueModule.md` §7.2, `StructureModule.md` §5.10).
-
-### Роли и права
-
-| Действие | Право |
-|---|---|
-| Просмотр точек очереди/окон | `QUEUE_POINT_GET` (16001) / `QUEUE_WINDOW_GET` (16011) |
-| CRUD точки очереди, включая размещение | `QUEUE_POINT_MANAGE` (16002) |
-| CRUD окна | `QUEUE_WINDOW_MANAGE` (16012) |
-| Просмотр реестра киосков | `QUEUE_KIOSK_GET` (16031) |
-| CRUD киоска, включая перевыпуск кода | `QUEUE_KIOSK_MANAGE` (16032) |
-| Просмотр реестра мониторов | `QUEUE_MONITOR_GET` (16041) |
-| CRUD монитора, включая перевыпуск кода | `QUEUE_MONITOR_MANAGE` (16042) |
-| Просмотр карты стендов / кабинетов | `STRUCTURE_STAND_GET` (3440) / `STRUCTURE_ROOM_GET` (3430) |
-| Полный доступ к модулю очереди | `QUEUE_MANAGE` (16900) |
-
-> Операционные права сотрудника (`QUEUE_TICKET_CALL`, занять/освободить окно, пауза) относятся к рабочему виджету `1.3.0.2`, не к этой административной странице. Права печати талона киоском (`QUEUE_KIOSK_TICKET_PRINT`) и чтения потока монитором — зашиты в сервисный токен устройства при привязке, не назначаются вручную ни на этой, ни на какой-либо другой административной странице (`ElectronicQueueModule.md` §9.7, §6.10).
-
----
-
 ## Acceptance criteria
 
 1. Реестр показывает точки очереди с указанием отдела, места размещения (окно/комната/не размещена) и числа окон; у одного отдела может быть несколько точек одновременно.

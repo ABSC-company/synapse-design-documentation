@@ -167,24 +167,6 @@
 
 ## Зависимости и ограничения
 
-### API
-
-1. `GET /payments/invoices` → фактически `GET /invoices` (`PaymentsModule.md` §8) — поиск и список счетов.
-2. `GET /invoices/:id` — детали счёта.
-3. `POST /invoices/:id/pay` — оплата (целиком/частично).
-4. `GET /payments` — история оплат по счёту (фильтр `invoice_id`).
-5. `POST /payments/:id/refund` — возврат.
-6. `POST /gateway/:provider/initiate`, `GET /gateway/transactions/:id` — эквайринг.
-7. Активная смена кассира — контекст берётся из `1.8.0`/глобального состояния модуля, не запрашивается заново на этой странице.
-
-### Роли и права
-
-1. `PAYMENTS_INVOICE_GET` — просмотр счетов.
-2. `PAYMENTS_PAYMENT_CREATE` — приём оплаты.
-3. `PAYMENTS_PAYMENT_GET` — просмотр истории оплат.
-4. `PAYMENTS_PAYMENT_REFUND` — возврат.
-5. `WORK_SHIFT_GET`/наличие активной смены — доступ к странице в принципе.
-
 ### Технические ограничения
 
 1. Опрос статуса эквайринга — не чаще, чем раз в 2–3 секунды, с ограничением по времени (см. edge case 5).

@@ -110,19 +110,6 @@
 2. Скачивание — не блокирует интерфейс; в строке таблицы на время запроса иконка «Скачать» заменяется спиннером.
 3. Цветовая индикация net — мгновенная, без анимации.
 
-## Зависимости и ограничения
-
-### API
-
-1. `GET /cash-register/reports` — список с фильтрами (роут добавлен в рамках этой документации, см. `CashRegisterModule.md` §8, §12.4 — `ReportListItemDto`).
-2. `GET /cash-register/reports/:id` — детальный отчёт (`ReportDto` с полным `snapshot`).
-3. `GET /cash-register/reports/:id/download?format=excel|pdf` — скачивание.
-
-### Роли и права
-
-1. `CASH_REPORT_GET` — просмотр журнала и деталей.
-2. `CASH_REPORT_DOWNLOAD` — скачивание.
-
 ## Acceptance criteria
 
 1. Журнал отчётов фильтруется по кассе, кассиру, типу и периоду.
